@@ -5,22 +5,23 @@ require 'byebug'
 
 RSpec.describe 'Posts', type: :request do
   include PostsHelper
+
   context 'GET API' do
     describe 'return success' do
       it 'get all posts' do
-        get '/api/posts'
+        get '/api/posts', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
 
       it 'get post detail' do
-        get "/api/posts/#{post_created.id}"
+        get "/api/posts/#{post_created.id}", headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
     end
 
     describe 'return failed' do
       it 'get post detail' do
-        get '/api/posts/12'
+        get '/api/posts/12', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
     end
@@ -32,14 +33,14 @@ RSpec.describe 'Posts', type: :request do
 
     describe 'return success' do
       it 'post using valid params' do
-        post '/api/posts', params: valid_params
+        post '/api/posts', params: valid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(201)
       end
     end
 
     describe 'return failed' do
       it 'post using invalid params' do
-        post '/api/posts', params: invalid_params
+        post '/api/posts', params: invalid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
     end
@@ -51,19 +52,19 @@ RSpec.describe 'Posts', type: :request do
 
     describe 'return success' do
       it 'using valid params' do
-        put "/api/posts/#{post_created.id}", params: valid_params
+        put "/api/posts/#{post_created.id}", params: valid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
     end
 
     describe 'return failed' do
       it 'using invalid params' do
-        put "/api/posts/#{post_created.id}", params: invalid_params
+        put "/api/posts/#{post_created.id}", params: invalid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
 
       it 'post does not exist' do
-        put '/api/posts/12', params: invalid_params
+        put '/api/posts/12', params: invalid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
     end
@@ -72,14 +73,14 @@ RSpec.describe 'Posts', type: :request do
   context 'DELETE API' do
     describe 'return success' do
       it 'using valid params' do
-        delete "/api/posts/#{post_created.id}"
+        delete "/api/posts/#{post_created.id}", headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
     end
 
     describe 'return failed' do
       it 'post does not exist' do
-        delete '/api/posts/12'
+        delete '/api/posts/12', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
     end

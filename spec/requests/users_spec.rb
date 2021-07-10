@@ -7,12 +7,12 @@ RSpec.describe 'Users', type: :request do
   context 'GET API' do
     describe 'return success' do
       it 'get all users' do
-        get '/api/users'
+        get '/api/users', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
 
       it 'get user detail' do
-        get "/api/users/#{user.id}"
+        get "/api/users/#{user.id}", headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
         expect(response.body).to_not be_empty
       end
@@ -20,7 +20,7 @@ RSpec.describe 'Users', type: :request do
 
     describe 'return failed' do
       it 'get user detail' do
-        get '/api/users/12'
+        get '/api/users/12', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
     end
@@ -51,39 +51,39 @@ RSpec.describe 'Users', type: :request do
 
     describe 'return success' do
       it 'using valid params' do
-        put "/api/users/#{user.id}", params: valid_params
+        put "/api/users/#{user.id}", params: valid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
 
       it 'activate user' do
-        put "/api/users/#{user.id}/activate"
+        put "/api/users/#{user.id}/activate", headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
 
       it 'inactivate user' do
-        put "/api/users/#{user.id}/activate"
+        put "/api/users/#{user.id}/activate", headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
     end
 
     describe 'return failed' do
       it 'using invalid params' do
-        put "/api/users/#{user.id}", params: invalid_params
+        put "/api/users/#{user.id}", params: invalid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
 
       it 'user does not exist' do
-        put '/api/users/12', params: invalid_params
+        put '/api/users/12', params: invalid_params, headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
 
       it 'activate user' do
-        put '/api/users/12/activate'
+        put '/api/users/12/activate', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
 
       it 'inactivate user' do
-        put '/api/users/12/inactivate'
+        put '/api/users/12/inactivate', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
     end
@@ -92,14 +92,14 @@ RSpec.describe 'Users', type: :request do
   context 'DELETE API' do
     describe 'return success' do
       it 'using valid params' do
-        delete "/api/users/#{user.id}"
+        delete "/api/users/#{user.id}", headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(200)
       end
     end
 
     describe 'return failed' do
       it 'user does not exist' do
-        delete '/api/users/12'
+        delete '/api/users/12', headers: { Authorization: "Bearer #{auth_token}" }
         expect(response).to have_http_status(400)
       end
     end
